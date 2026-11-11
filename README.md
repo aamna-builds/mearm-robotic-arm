@@ -1,15 +1,15 @@
 # MeArm Robotic Arm
 
-A 4-degree-of-freedom desktop robot arm built from laser-cut **4 mm acrylic** and four **MG90S** servos, controlled by an **Arduino Uno**. We built it in July 2025 as team **Byte & Bolt** in the 15-day *SAE × Robonix* summer robotics challenge at Ahmedabad University.
+A 4-degree-of-freedom desktop robot arm built from laser-cut **4 mm acrylic** and four **MG90S** servos, controlled by an **Arduino Uno**. Built in July 2025 during the 15-day *SAE × Robonix* summer robotics challenge at Ahmedabad University.
 
-The arm is based on the open-source **[MeArm](https://github.com/MeArm/MeArm)** by Benjamin Gray and Jack Howard. The original design is theirs, and our changes are listed below. See [Credits](#credits).
+The arm is based on the open-source **[MeArm](https://github.com/MeArm/MeArm)** by Benjamin Gray and Jack Howard. The original design is theirs, and the changes made here are listed below. See [Credits](#credits).
 
 | | |
 |---|---|
 | <img src="media/gifs/arm-motion.gif" width="100%" alt="The arm moving"> | <img src="media/photos/arm-assembly.jpg" width="100%" alt="Assembled arm"> |
 | <sub>The finished arm running through its joints.</sub> | <sub>Assembly on the bench.</sub> |
 
-## What we built
+## What was built
 
 - **Structure:** MeArm parts cut from 4 mm clear acrylic instead of the standard 3 mm, for a stiffer arm. Slots and holes were sized for the thicker sheet: M3 holes opened to about 3.2 mm, and servo pockets sized to the MG90S body.
 - **Additions to the original:**
@@ -18,7 +18,7 @@ The arm is based on the open-source **[MeArm](https://github.com/MeArm/MeArm)** 
   - a gripper reinforced at its high-stress joints
 - **Electronics:** an Uno driving four servos on PWM pins (base D3, shoulder D5, elbow D6, gripper D9). The servos run from a separate 5 V supply with a common ground.
 - **Control:** open loop. A timed sequence of servo angles produced a pick-and-place routine, with potentiometer control as an option.
-- **Simulation first:** we laid out and tested the circuit in Tinkercad, sweeping each servo, before wiring the real arm.
+- **Simulation first:** the circuit was laid out and tested in Tinkercad, sweeping each servo, before the real arm was wired.
 
 | Laser cutting | Cut parts | Base with servo | Tinkercad circuit |
 |---|---|---|---|
@@ -34,9 +34,9 @@ The full build story, from sheets of acrylic to the final demo, is in [docs/jour
 | Structure | The 4 mm acrylic held up with little flex under light loads |
 | Gripper | Held light objects such as paper and a foam cube |
 | Pick-and-place | Moved a foam cube from one side of the table to the other in about 15–20 s |
-| Heat | Servos warmed up over long sessions, so we took cooling breaks |
+| Heat | Servos warmed up over long sessions, so long tests needed cooling breaks |
 
-**Problems we hit, and the fixes:**
+**Problems and fixes:**
 
 | Problem | Cause | Fix |
 |---|---|---|
@@ -53,7 +53,7 @@ The challenge version moved joint by joint with fixed angles and delays. The nex
 **Kinematics ([`matlab/`](matlab/)):**
 - The MeArm's parallel linkage holds the gripper level and drives the forearm angle directly. That makes the inverse kinematics two triangles plus a base rotation.
 - The MATLAB toolbox maps the reachable area under the joint and linkage limits, and estimates the static load on the shoulder and elbow servos.
-- With the arm stretched out level, the busier servo carries about **half of the MG90S stall torque** from gravity alone. Add acceleration and a sagging supply, and that fits the elbow trouble and jitter we saw at full reach.
+- With the arm stretched out level, the busier servo carries about **half of the MG90S stall torque** from gravity alone. Add acceleration and a sagging supply, and that fits the elbow trouble and jitter seen at full reach.
 
 ![Workspace and servo load](matlab/figures/workspace_and_load.png)
 
@@ -87,12 +87,11 @@ g++ -std=c++17 firmware/test/test_native.cpp firmware/mearm_ik/kinematics.cpp -o
 
 ## Credits
 
-This was a team project. Full credits and licences are in [CREDITS.md](CREDITS.md).
+Full credits and licences are in [CREDITS.md](CREDITS.md).
 
-- **Team Byte & Bolt (Group A):** Aamna Khan, Aryan Abhishekh, Khushi Shah, Nikkesh Parekh
 - **Mentor:** Dev Shah
 - **Faculty:** Prof. Maryam Kaveshghar
-- **Organisers:** the Robotics Club of Ahmedabad University and the SAE student chapter (*SAE × Robonix*, July 2025)
+- **Event:** the Robotics Club of Ahmedabad University and the SAE student chapter (*SAE × Robonix*, July 2025)
 - **Original MeArm design:** Benjamin Gray and Jack Howard (phenoptix, now MeArm Robotics). The hardware is open source under CC BY-SA.
 
 The code and documentation written for this repository are under the [MIT License](LICENSE). The MeArm hardware design remains under its own CC BY-SA licence; see [CREDITS.md](CREDITS.md).
