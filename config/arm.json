@@ -1,0 +1,44 @@
+{
+  "_comment": "Single source of truth for the arm. Read by matlab/ and by tools/gen_firmware_config.py (firmware/mearm_ik/config.h). Lengths in mm, angles in degrees. Link lengths are the nominal MeArm values; measure your own build and update them.",
+
+  "geometry": {
+    "upper_arm_mm": 80.0,
+    "forearm_mm": 80.0,
+    "gripper_offset_mm": 68.0
+  },
+
+  "joints": {
+    "_comment": "servo_center_deg = servo command (0-180) at the joint's reference pose: base pointing straight ahead, upper arm vertical, forearm horizontal. sign flips direction. Calibrate on your arm.",
+    "base":     { "pin": 3, "servo_center_deg": 90, "sign":  1, "min_deg": -80, "max_deg": 80 },
+    "shoulder": { "pin": 5, "servo_center_deg": 90, "sign":  1, "min_deg": 25,  "max_deg": 150 },
+    "elbow":    { "pin": 6, "servo_center_deg": 90, "sign": -1, "min_deg": -70, "max_deg": 45 },
+    "gripper":  { "pin": 9, "open_deg": 60, "closed_deg": 110 }
+  },
+
+  "linkage": {
+    "_comment": "The parallel linkage stops the forearm folding too far onto the upper arm or opening past straight. Angle between upper arm and forearm, measured at the elbow.",
+    "min_elbow_interior_deg": 35,
+    "max_elbow_interior_deg": 165
+  },
+
+  "motion": {
+    "cartesian_speed_mm_s": 60.0,
+    "step_mm": 2.0,
+    "settle_ms": 250,
+    "home_mm": [120.0, 0.0, 40.0]
+  },
+
+  "servo": {
+    "model": "MG90S",
+    "stall_torque_Nm": 0.177,
+    "_stall_comment": "1.8 kg cm at 4.8 V, manufacturer datasheet"
+  },
+
+  "loads_assumed": {
+    "_comment": "Estimates for the torque analysis, not measurements.",
+    "upper_arm_kg": 0.012,
+    "forearm_kg": 0.010,
+    "gripper_with_servo_kg": 0.025,
+    "payload_kg": 0.010
+  }
+}

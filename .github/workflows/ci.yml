@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  matlab-octave:
+    name: Kinematics (GNU Octave)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends octave
+      - name: IK / FK tests
+        working-directory: matlab
+        run: octave --no-gui --no-window-system --eval "run_tests"
+      - name: IK table is up to date
+        working-directory: matlab
+        run: |
+          octave --no-gui --no-window-system --eval "export_table"
+          git diff --exit-code output/ik_table.csv
+
+  firmware:
+    name: Firmware
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: config.h matches config/arm.json
+        run: python3 tools/gen_firmware_config.py --check
+      - name: PC tests (against the MATLAB table)
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror firmware/test/test_native.cpp firmware/mearm_ik/kinematics.cpp -o test_native
+          ./test_native matlab/output/ik_table.csv
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Compile for Arduino Uno
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+          arduino-cli lib install Servo
+          arduino-cli compile --fqbn arduino:avr:uno --warnings all firmware/mearm_ik
