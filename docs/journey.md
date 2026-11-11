@@ -6,7 +6,7 @@
 
 ## 1. Choosing the design
 
-The goal was an arm that was small and cheap, and that could be finished and understood within two weeks. The open-source MeArm was chosen (Benjamin Gray and Jack Howard) because:
+The goal was an arm that was small and cheap, and that could be finished and understood within two weeks. The open-source MeArm by Benjamin Gray and Jack Howard was chosen because:
 
 - it is well documented
 - its parts cut from a single sheet
